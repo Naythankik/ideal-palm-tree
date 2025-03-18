@@ -6,9 +6,9 @@ const adminResource = require("../resources/adminResource");
 const { verifyToken, createToken} = require("../helper/token");
 
 const login = async (req, res) => {
-    res.json(req.body)
-    return ;
     const validation = loginSchema(req.body);
+    res.json(validation);
+    return;
 
     const { error, value } = validation;
     if (error) {
