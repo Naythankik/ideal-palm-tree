@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon main",
+    "production": "node main.js",
     "seed": "node seeder.cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
