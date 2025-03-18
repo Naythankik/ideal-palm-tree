@@ -14,10 +14,10 @@ const login = async (req, res) => {
     }
 
     try {
-        res.status(200).json({ success: true, user: value });
-        return;
         const {email, password} = value;
         const user = await User.findOne({email});
+        res.status(200).json({user})
+        return;
 
         if (!user) {
             return res.status(404).json({ success: false, message: "Invalid credentials, Try again!" });
