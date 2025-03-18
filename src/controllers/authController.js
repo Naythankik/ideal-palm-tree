@@ -7,14 +7,15 @@ const { verifyToken, createToken} = require("../helper/token");
 
 const login = async (req, res) => {
     const validation = loginSchema(req.body);
+
     const { error, value } = validation;
-    res.status(200).json(value)
-    return
     if (error) {
         return res.status(422).json({ success: false, message: error.details[0].message });
     }
 
     try {
+        res.status(200).json({ success: true, user: value });
+        return;
         const {email, password} = value;
         const user = await User.findOne({email});
 
