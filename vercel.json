@@ -2,6 +2,5 @@
   "version": 2,
   "name": "landing-vault",
   "builds": [{ "src": "main.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/main.js" }],
-  "rewrites": [{ "source": "/(.*)", "destination": "/api" }]
+  "routes": [{ "src": "/(.*)", "dest": "/main.js" }]
 }
