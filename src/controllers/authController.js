@@ -7,10 +7,9 @@ const { verifyToken, createToken} = require("../helper/token");
 
 const login = async (req, res) => {
     const validation = loginSchema(req.body);
-    res.json(validation);
-    return;
-
     const { error, value } = validation;
+    res.status(200).json(value)
+    return
     if (error) {
         return res.status(422).json({ success: false, message: error.details[0].message });
     }
