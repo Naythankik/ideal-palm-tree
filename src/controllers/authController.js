@@ -13,6 +13,12 @@ const login = async (req, res) => {
         return res.status(422).json({ success: false, message: error.details[0].message });
     }
 
+    res.json({
+        value,
+        error
+    })
+    return ;
+
     try {
         const {email, password} = value;
         const user = await User.findOne({email});
