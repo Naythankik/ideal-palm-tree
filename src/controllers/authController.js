@@ -16,7 +16,7 @@ const login = async (req, res) => {
     try {
         const {email, password} = value;
         const user = await User.findOne({email});
-        res.status(200).json({user})
+        res.status(200).json({success: true, user})
         return;
 
         if (!user) {
