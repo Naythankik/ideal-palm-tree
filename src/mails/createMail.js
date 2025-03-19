@@ -36,6 +36,7 @@ module.exports = async (req, res) => {
             await sendMail("Email verification Mail", htmlBody, email);
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ message: error.message });
     }
 

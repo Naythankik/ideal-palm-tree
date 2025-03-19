@@ -42,6 +42,7 @@ const login = async (req, res) => {
             access_token : token
         });
     }catch (error) {
+        console.error(error);
         res.status(400).send(error.message);
     }
 };
@@ -63,6 +64,7 @@ const create = async (req, res, next) => {
         await newUser.save();
         req.body.id = newUser._id;
     } catch (err) {
+        console.error(error);
         res.status(500).send({
             message: err.message,
         });
