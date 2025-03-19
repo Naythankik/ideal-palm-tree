@@ -4,6 +4,7 @@ const cors = require('cors');
 const connection = require('./config/database');
 const { authRoutes, landingVault} = require("./routes");
 const authentication = require('./src/middlewares/authentication');
+const User = require('./src/models/user')
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -16,10 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/landing-vault/auth', authRoutes);
 app.use('/api/v1/landing-vault', authentication, landingVault);
 
-app.use("/", (req, res) => {
+app.use("/", async (req, res) => {
+
     res.status(200).json({
         success: true,
         message: "Welcome to Landing Vault.",
+        data: await User.find()
     });
 });
 
