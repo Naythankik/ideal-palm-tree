@@ -39,6 +39,7 @@ module.exports = async (req, res) => {
         console.error(error);
         return res.status(500).json({ message: error.message });
     }
+    admin.password = undefined;
 
     res.status(200).send({
         message: "Account created successfully, Mail has been sent to the provided email!",
