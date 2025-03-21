@@ -26,6 +26,9 @@ const read = async (req, res) => {
 }
 
 const create = async (req, res) => {
+    return res.status(200).json({
+        message: 'Work in progress',
+    })
 }
 
 module.exports = {

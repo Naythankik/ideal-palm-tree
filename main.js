@@ -2,8 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connection = require('./config/database');
-const { authRoutes, landingVault} = require("./routes");
+const { authRoutes, userRoutes, adminRoutes} = require("./routes");
 const authentication = require('./src/middlewares/authentication');
+
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -14,7 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1/landing-vault/auth', authRoutes);
-app.use('/api/v1/landing-vault', authentication, landingVault);
+app.use('/api/v1/landing-vault', userRoutes);
+app.use('/api/v1/landing-vault', authentication, adminRoutes);
 
 app.use("/", (req, res) => {
 

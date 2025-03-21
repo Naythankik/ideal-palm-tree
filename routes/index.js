@@ -1,5 +1,6 @@
 const authRoutes = require("./authenticationRoutes");
-const landingVault = require("./landingVaultRoutes");
+const user = require("./user");
+const admin = require("./admin");
 
 
-module.exports = { authRoutes, landingVault };
+module.exports = { authRoutes, userRoutes: user, adminRoutes: admin };
