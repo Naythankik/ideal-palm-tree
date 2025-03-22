@@ -1,5 +1,5 @@
 const express = require("express");
-const { dashboard, readCollection } = require("../src/controllers/adminController");
+const { dashboard, readCollection, readACategoryDocument} = require("../src/controllers/adminController");
 const {readSubscriber } = require("../src/controllers/subscribersController");
 const { readPages, readPage} = require("../src/controllers/pagesController");
 
@@ -11,6 +11,8 @@ router.get("/pages", readPages)
 router.get("/page/read/:id", readPage)
 
 router.get("/categories/:collection", readCollection)
+
+router.get("/categories/:collection/:id", readACategoryDocument)
 
 router.get("/subscribers", readSubscriber)
 
