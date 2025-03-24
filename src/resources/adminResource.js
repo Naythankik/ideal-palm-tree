@@ -11,5 +11,5 @@ const adminResource = (admin) => {
 }
 
 module.exports = (admins) => {
-    return admins.length > 1 ? admins.map(admin => adminResource(admin)) : admins
+    return admins.length > 1 ? admins.map(admin => adminResource(admin)) : adminResource(admins)
 };

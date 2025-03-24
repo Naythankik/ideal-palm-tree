@@ -18,5 +18,5 @@ const pageResource = (page) => {
 };
 
 module.exports = (pages) => {
-    return pages.length ? pages.map(page => pageResource(page)) : pages;
+    return pages.length ? pages.map(page => pageResource(page)) : pageResource(pages);
 };
