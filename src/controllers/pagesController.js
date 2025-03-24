@@ -15,6 +15,7 @@ const read = async (req, res) => {
         }
 
         if(search){
+            // by brandName, componentType, description,
             query.brandName = new RegExp(search, 'i');
         }
 
