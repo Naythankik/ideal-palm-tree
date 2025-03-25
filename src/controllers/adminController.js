@@ -6,15 +6,16 @@ const Style = require("../models/style");
 const Users = require("../models/user");
 
 const AdminResource = require("../resources/adminResource");
+const UniversalResource = require("../resources/universalResource");
 
 const collectionList = {
     'components': {
         'model' : Component,
-        'resource' : null
+        'resource' : UniversalResource
     },
     'types': {
         'model' : Type,
-        'resource' : null
+        'resource' : UniversalResource
     },
     'users': {
         'model' : Users,
@@ -22,15 +23,15 @@ const collectionList = {
     },
     'industries': {
         'model' : Industry,
-        'resource' : null
+        'resource' : UniversalResource
     },
     'stacks': {
         'model' : Stack,
-        'resource' : null,
+        'resource' : UniversalResource
     },
     'styles': {
         'model' : Style,
-        'resource' : null
+        'resource' : UniversalResource
     }
 }
 
