@@ -1,7 +1,7 @@
 const Component = require("../models/component");
-const componentResources = require("../resources/componentResource");
-const componentSchema = require("../requests/componentRequest");
-const updateComponentSchema = require("../requests/updateComponentRequest");
+const componentResources = require("../resources/universalResource");
+const componentSchema = require("../requests/universalRequest");
+const updateComponentSchema = require("../requests/updateUniversalRequest");
 
 const create = async (req, res) => {
     const { value, error } = componentSchema(req.body, { abortEarly: false });
@@ -32,7 +32,7 @@ const read = async (req, res) => {
         const totalComponent = await Component.countDocuments(queryDate);
 
         res.status(200).json({
-            subscribers: componentResources(components),
+            data: componentResources(components),
             totalComponent
         });
     } catch (error) {

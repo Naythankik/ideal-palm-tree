@@ -1,7 +1,7 @@
 const Industry = require("../models/industry");
-const industryResources = require("../resources/industryResource");
-const industrySchema = require("../requests/industryRequest");
-const updateIndustrySchema = require("../requests/updateIndustryRequest");
+const industryResources = require("../resources/universalResource");
+const industrySchema = require("../requests/universalRequest");
+const updateIndustrySchema = require("../requests/updateUniversalRequest");
 
 const create = async (req, res) => {
     const { value, error } = industrySchema(req.body, { abortEarly: false });
@@ -32,7 +32,7 @@ const read = async (req, res) => {
         const totalIndustries = await Industry.countDocuments(queryDate);
 
         res.status(200).json({
-            subscribers: industryResources(industries),
+            data: industryResources(industries),
             totalIndustries,
         });
     } catch (error) {
