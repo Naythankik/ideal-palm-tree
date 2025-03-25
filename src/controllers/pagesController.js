@@ -15,8 +15,11 @@ const read = async (req, res) => {
         }
 
         if(search){
-            // by brandName, componentType, description,
-            query.brandName = new RegExp(search, 'i');
+            query.$or = [
+                { brandName: new RegExp(search, 'i') },
+                { 'componentType.title': new RegExp(search, 'i') },
+                { brandDescription: new RegExp(search, 'i') }
+            ];
         }
 
         const pages = await Pages.find(query)
