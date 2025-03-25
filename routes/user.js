@@ -3,6 +3,7 @@ const { dashboard, readCollection, readACategoryDocument} = require("../src/cont
 const {readSubscriber } = require("../src/controllers/subscribersController");
 const { readPages, readPage} = require("../src/controllers/pagesController");
 const {readComponents, readAComponent} = require("../src/controllers/componentController");
+const {readIndustries, readAnIndustry} = require("../src/controllers/industriesController");
 
 const router = express.Router();
 
@@ -13,6 +14,9 @@ router.get("/page/read/:id", readPage)
 
 router.get('/components', readComponents)
 router.get('/components/:id', readAComponent)
+
+router.get('/industries', readIndustries)
+router.get('/industries/:id', readAnIndustry)
 
 router.get("/categories/:collection", readCollection)
 
