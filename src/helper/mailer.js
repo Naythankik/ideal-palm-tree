@@ -11,7 +11,10 @@ const sendMail = async (subject, body, email) => {
                    user: process.env.MAIL_USERNAME,
                    pass: process.env.MAIL_PASSWORD,
                },
-               debug: process.env.NODE_ENV !== 'production'
+               debug: process.env.NODE_ENV !== 'production',
+               connectionTimeout: 10000,
+               greetingTimeout: 10000,
+               sendTimeout: 30000
            });
 
           const info =  await transporter.sendMail({
