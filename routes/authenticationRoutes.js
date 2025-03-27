@@ -6,8 +6,8 @@ const requestVerificationMail = require("../src/mails/requestVerificationMail");
 const router = express.Router();
 
 router.post('/login', login);
-router.post('/signup', create, createMail);
-router.post('/verify-account/:token', verifyAccount)
-router.post('/request-verification', requestVerification, requestVerificationMail)
+router.post('/signup', create);
+// router.post('/verify-account/:token', verifyAccount)
+// router.post('/request-verification', requestVerification, requestVerificationMail)
 
 module.exports = router;

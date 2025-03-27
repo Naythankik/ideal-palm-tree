@@ -25,7 +25,7 @@ const login = async (req, res) => {
         if (!doesPasswordMatch) {
             return res.status(401).send({
                 success: false,
-                error: "Invalid credentials, Try again!",
+                message: "Invalid credentials, Try again!",
             });
         }
 
@@ -37,17 +37,17 @@ const login = async (req, res) => {
 
         const token = await createToken({ email: user.email, id: user._id }, "2h");
 
-        res.status(200).send({
+        return res.status(200).send({
             admin: adminResource(user),
             access_token : token
         });
     }catch (error) {
         console.error(error);
-        res.status(400).send(error.message);
+        return res.status(400).send(error.message);
     }
 };
 
-const create = async (req, res, next) => {
+const create = async (req, res) => {
     try {
         const { error, value } = loginSchema(req.body);
         if (error) {
@@ -60,16 +60,17 @@ const create = async (req, res, next) => {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        const newUser = new User(value);
-        await newUser.save();
-        req.body.id = newUser._id;
+        const newUser = await User.create(value);
+        return res.status(200).json({
+            message: "User created successfully",
+            admin: adminResource(newUser),
+        })
     } catch (err) {
         console.error(error);
-        res.status(500).send({
+        return res.status(500).send({
             message: err.message,
         });
     }
-    next();
 }
 
 const verifyAccount = async (req, res) => {
@@ -92,11 +93,11 @@ const verifyAccount = async (req, res) => {
         admin.verificationToken = undefined;
 
         await admin.save();
-        res.status(200).json({
+        return res.status(200).json({
             admin: adminResource(admin)
         });
     } catch (err) {
-        res.status(500).send({
+        return es.status(500).send({
             message: err.message,
         });
     }
@@ -124,7 +125,7 @@ const requestVerification = async (req, res, next) => {
         req.body.id = user._id
         next();
     }catch (error) {
-        res.status(400).send(error.message);
+        return res.status(400).send(error.message);
     }
 }
 
