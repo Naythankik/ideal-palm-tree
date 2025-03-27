@@ -13,7 +13,6 @@ module.exports = async (req, res) => {
 
         admin = await User.findById(id);
         admin.verificationToken = token;
-        await admin.save();
 
         const content = 'Welcome to Landing Vault. Click the button below to verify your email address and finish your account.';
         const url = `${process.env.HOSTED_URL}/account-verification/${token}`;
@@ -33,7 +32,17 @@ module.exports = async (req, res) => {
             <p style="text-align: center; margin: 0;">This email was sent by Landing Vault</p><br>
             <p style="text-align: center; margin: 0;">If you didn't request an email verification, please ignore this email.</p>
             `
-            await sendMail("Email verification Mail", htmlBody, email);
+        const response = await sendMail("Email verification Mail", htmlBody, email);
+
+        if (response.accepted.length > 0) {
+            await admin.save();
+        }else {
+            await User.findByIdAndDelete(id);
+
+            return res.status(401).send({
+                error: "Couldn't send email verification",
+            })
+        }
 
     } catch (error) {
         console.error(error);
