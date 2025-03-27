@@ -6,14 +6,12 @@ const sendMail = async (subject, body, email) => {
            let transporter = nodemailer.createTransport({
                host: process.env.MAIL_HOST,
                port: process.env.MAIL_PORT,
-               secure: process.env.NODE_ENV === 'production',
+               secure: false,
                auth: {
                    user: process.env.MAIL_USERNAME,
                    pass: process.env.MAIL_PASSWORD,
                },
-               debug: process.env.NODE_ENV !== 'production',
-               connectionTimeout: 60000,
-               socketTimeout: 60000,
+               debug: process.env.NODE_ENV !== 'production'
            });
 
           const info =  await transporter.sendMail({
