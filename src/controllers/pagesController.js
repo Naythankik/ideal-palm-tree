@@ -6,7 +6,7 @@ const { uploadImage } = require('../helper/file');
 
 const read = async (req, res) => {
     let query = {};
-    const { page = 1, limit = 15, date, search } = req.query;
+    const { page = 1, limit = 20, date, search } = req.query;
     const skip = (page - 1) * limit;
 
     try {
