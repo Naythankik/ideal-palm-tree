@@ -15,5 +15,6 @@ const ComponentSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
+ComponentSchema.index({ title: 1 });
 
 module.exports = mongoose.model("Component", ComponentSchema);

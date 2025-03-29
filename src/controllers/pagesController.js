@@ -2,6 +2,7 @@ const Pages = require("../models/page");
 const pageResource = require("../resources/pagesResource");
 const pageSchema = require('../requests/pageRequest');
 const Page = require("../models/page");
+const Component = require("../models/component");
 const { uploadImage } = require('../helper/file');
 
 const read = async (req, res) => {
@@ -43,6 +44,69 @@ const read = async (req, res) => {
         console.error(error);
         return res.status(500).json({
             message: 'An error occurred while fetching pages',
+        });
+    }
+}
+
+const readPagesByTitle = async (req, res) => {
+    const { componentTitle } = req.params;
+    const { page = 1, limit = 20 } = req.query;
+
+    try {
+        const component = await Component.findOne({ title: componentTitle });
+
+        if (!component) {
+            return res.status(404).json({ message: 'Component not found' });
+        }
+
+        const query = { componentType: component._id };
+        const pages = await Pages.find(query)
+            .select(['_id', 'brandName', 'pageCoverImage', 'createdAt', 'updatedAt'])
+            .populate('componentType', 'title _id')
+            .skip((page - 1) * limit)
+            .limit(Number(limit));
+
+        const totalPages = await Pages.countDocuments(query)
+
+        return res.status(200).json({
+            pages: pageResource(pages),
+            pagination: {
+                currentPage: Number(page),
+                totalPages: Math.ceil(totalPages / limit),
+                totalItems: totalPages,
+                itemsPerPage: Number(limit)
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'An error occurred while fetching pages',
+        });
+    }
+}
+
+const readAPageByBrandTitle = async (req, res) => {
+    const { componentTitle, brandName } = req.params;
+    try {
+        const component = await Component.findOne({ title: componentTitle });
+
+        if (!component) {
+            return res.status(404).json({ message: 'Component not found' });
+        }
+
+        const query = {componentType: component._id, brandName};
+        const page = await Pages.find(query)
+            .populate('componentType')
+            .populate('industry')
+            .populate('style')
+
+        return res.status(200).json({
+            page: page.length ? pageResource(page) : [],
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: 'An error occurred while fetching page',
         });
     }
 }
@@ -140,5 +204,7 @@ module.exports = {
     readPages: read,
     readPage,
     updatePage: update,
-    deletePage
+    deletePage,
+    readPagesByTitle,
+    readAPageByBrandTitle
 }

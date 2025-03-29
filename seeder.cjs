@@ -27,17 +27,6 @@ const seederUsers = async () => {
     }
 };
 
-const seederPages = async () => {
-    const pages = await pageFactory();
-    try {
-        await Page.insertMany(pages);
-        console.log('Pages seeded successfully');
-    } catch (err) {
-        console.error('Error seeding pages:', err);
-        throw err;
-    }
-};
-
 const seedUniversal = async () => {
     const universals = [Industry, Component, Stack, Style, Type];
     try {
@@ -57,6 +46,17 @@ const seederSubscribers = async () => {
         console.log('Subscribers seeded successfully');
     } catch (err) {
         console.error('Error seeding subscribers:', err);
+        throw err;
+    }
+};
+
+const seederPages = async () => {
+    const pages = await pageFactory();
+    try {
+        await Page.insertMany(pages);
+        console.log('Pages seeded successfully');
+    } catch (err) {
+        console.error('Error seeding pages:', err);
         throw err;
     }
 };
