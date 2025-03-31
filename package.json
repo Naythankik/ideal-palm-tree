@@ -6,6 +6,7 @@
     "dev": "nodemon main",
     "production": "node main.js",
     "seed": "node seeder.cjs",
+    "migrate": "node migrateFile.cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
