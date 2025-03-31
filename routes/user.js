@@ -13,29 +13,23 @@ const router = express.Router();
 router.get("/dashboard", dashboard)
 
 router.get("/pages", readPages)
-router.get("/pages/:componentTitle", readPagesByTitle)
-router.get("/page/:componentTitle/:brandName", readAPageByBrandTitle)
-router.get("/page/read/:id", readPage)
-
 router.get('/components', readComponents)
-router.get('/components/:id', readAComponent)
-
 router.get('/industries', readIndustries)
-router.get('/industries/:id', readAnIndustry)
-
 router.get('/stacks', readStacks)
-router.get('/stacks/:id', readAStack)
-
 router.get('/styles', readStyles)
-router.get('/styles/:id', readAStyle)
-
 router.get('/types', readTypes)
-router.get('/types/:id', readAType)
+router.get("/subscribers", readSubscriber)
 
+router.get('/components/:id', readAComponent)
+router.get("/pages/:componentTitle", readPagesByTitle)
+router.get('/industries/:id', readAnIndustry)
+router.get('/stacks/:id', readAStack)
+router.get('/styles/:id', readAStyle)
+router.get('/types/:id', readAType)
 router.get("/categories/:collection", readCollection)
 
+router.get("/page/read/:id", readPage)
+router.get("/page/:componentTitle/:brandName", readAPageByBrandTitle)
 router.get("/categories/:collection/:id", readACategoryDocument)
-
-router.get("/subscribers", readSubscriber)
 
 module.exports = router;
