@@ -96,12 +96,12 @@ const readAPageByBrandTitle = async (req, res) => {
 
         const query = {componentType: component._id, brandName};
         const page = await Pages.find(query)
-            .populate('componentType')
-            .populate('industry')
-            .populate('style')
+            .populate('componentType', 'title -_id')
+            .populate('industry', 'title -_id')
+            .populate('style', 'title -_id');
 
         return res.status(200).json({
-            page: page.length ? pageResource(page) : [],
+            page: page.length ? pageResource(page[0]) : {},
         });
     } catch (error) {
         console.error(error);
@@ -115,11 +115,11 @@ const readPage = async (req, res) => {
     const { id } = req.params;
     try {
         const page = await Pages.findById(id)
-            .populate('componentType')
-            .populate('industry')
-            .populate('stacks')
-            .populate('style')
-            .populate('type')
+            .populate('componentType','title -_id')
+            .populate('industry','title -_id')
+            .populate('stacks','title -_id')
+            .populate('style','title -_id')
+            .populate('type','title -_id')
 
         if(!page){
             return res.status(404).json({

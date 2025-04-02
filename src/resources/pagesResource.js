@@ -20,7 +20,7 @@ const pageResource = (page) => {
     return {
         id: page._id,
         brandName: page.brandName,
-        brandDescription: page.description,
+        brandDescription: page.brandDescription,
         pageImage: optimizeUrl(page.pageImage) ?? page.pageImage,
         pageCoverImage: optimizeUrl(page.pageCoverImage) ?? page.pageCoverImage,
         websiteUrl: page.websiteUrl,
@@ -36,5 +36,5 @@ const pageResource = (page) => {
 };
 
 module.exports = (pages) => {
-    return pages.length ? pages.map(page => pageResource(page)) : pageResource(pages);
+    return pages.length > 1 ? pages.map(page => pageResource(page)) : pageResource(pages);
 };
