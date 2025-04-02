@@ -69,7 +69,7 @@ const readPagesByTitle = async (req, res) => {
         const totalPages = await Pages.countDocuments(query)
 
         return res.status(200).json({
-            pages: pageResource(pages),
+            pages: pages.length ? pageResource(pages) : [],
             pagination: {
                 currentPage: Number(page),
                 totalPages: Math.ceil(totalPages / limit),
