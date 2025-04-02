@@ -6,15 +6,15 @@ const Stack = require("../../models/stack");
 const Style = require("../../models/style");
 const Type = require("../../models/type");
 
-const randomObjectId = async (model) => {
-    const result = await model.aggregate([{ $sample: { size: 1 } }]);
-    return result[0]?._id;};
+const randomElements = async (model, maxCount = 3) => {
+    const result = await model.aggregate([{ $sample: { size: maxCount } }]);
+    return result.map(doc => doc);
+};
 
-module.exports = async () => {
+module.exports = async (count) => {
     const pages = [];
 
-
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < count; i++) {
 
         let arr = [];
         for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
@@ -28,11 +28,11 @@ module.exports = async () => {
             pageCoverImage: faker.image.url(),
             websiteUrl: faker.internet.url(),
             mode: Math.random() > 0.5 ? "light" : "dark",
-            componentType: await randomObjectId(Component),
-            industry: await randomObjectId(Industry),
-            stacks: await randomObjectId(Stack),
-            style: await randomObjectId(Style),
-            type: await randomObjectId(Type),
+            componentType: await randomElements(Component),
+            industry: await randomElements(Industry, 3),
+            stacks: await randomElements(Stack, 3),
+            style: await randomElements(Style, 3),
+            type: await randomElements(Type, 3),
             colorPalette: arr
         };
         pages.push(page);

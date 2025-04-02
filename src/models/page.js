@@ -27,31 +27,31 @@ const PagesSchema = new mongoose.Schema({
         default: "light",
         enum: ["light", "dark"],
     },
-    componentType: {
+    componentType: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Component",
         required: true
-    },
-    industry: {
+    }],
+    industry: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Industry",
         required: true
-    },
-    stacks: {
+    }],
+    stacks: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Stack",
         required: true
-    },
-    style: {
+    }],
+    style: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Style",
         required: true
-    },
-    type: {
+    }],
+    type: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Type",
         required: true
-    },
+    }],
     colorPalette: {
         type: Array,
         required: true
