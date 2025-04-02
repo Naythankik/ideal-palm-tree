@@ -49,17 +49,27 @@ const read = async (req, res) => {
 }
 
 const readPagesByTitle = async (req, res) => {
-    const { componentTitle } = req.params;
-    const { page = 1, limit = 20 } = req.query;
+    const { page = 1, limit = 20, search } = req.query;
 
     try {
-        const component = await Component.findOne({ title: componentTitle });
+        let filterQuery = {};
+        if(search){
+           filterQuery = { title: new RegExp(search, 'i') }
+        }
+
+        const component = await Component.find(filterQuery);
 
         if (!component) {
             return res.status(404).json({ message: 'Component not found' });
         }
 
-        const query = { componentType: component._id };
+        let query = { componentType: component[0]?._id };
+
+        if(component.length > 1){
+            query = {};
+        }
+
+
         const pages = await Pages.find(query)
             .select(['_id', 'brandName', 'pageCoverImage', 'createdAt', 'updatedAt'])
             .populate('componentType', 'title _id')
@@ -201,7 +211,6 @@ const update = async (req, res) => {
 
 module.exports = {
     createPage: create,
-    readPages: read,
     readPage,
     updatePage: update,
     deletePage,
