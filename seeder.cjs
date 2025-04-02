@@ -51,7 +51,7 @@ const seederSubscribers = async () => {
 };
 
 const seederPages = async () => {
-    const pages = await pageFactory();
+    const pages = await pageFactory(70);
     try {
         await Page.insertMany(pages);
         console.log('Pages seeded successfully');

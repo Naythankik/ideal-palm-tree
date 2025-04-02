@@ -20,15 +20,14 @@ router.get('/styles', readStyles)
 router.get('/types', readTypes)
 router.get("/subscribers", readSubscriber)
 
+router.get("/page/:id", readPage)
 router.get('/components/:id', readAComponent)
-// router.get("/pages/:componentTitle", readPagesByTitle)
 router.get('/industries/:id', readAnIndustry)
 router.get('/stacks/:id', readAStack)
 router.get('/styles/:id', readAStyle)
 router.get('/types/:id', readAType)
 router.get("/categories/:collection", readCollection)
 
-router.get("/page/read/:id", readPage)
 router.get("/page/:componentTitle/:brandName", readAPageByBrandTitle)
 router.get("/categories/:collection/:id", readACategoryDocument)
 

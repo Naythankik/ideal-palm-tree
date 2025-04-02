@@ -72,7 +72,7 @@ const readPagesByTitle = async (req, res) => {
 
         const pages = await Pages.find(query)
             .select(['_id', 'brandName', 'pageCoverImage', 'createdAt', 'updatedAt'])
-            .populate('componentType', 'title _id')
+            .populate('componentType', 'title -_id')
             .skip((page - 1) * limit)
             .limit(Number(limit));
 
@@ -108,7 +108,9 @@ const readAPageByBrandTitle = async (req, res) => {
         const page = await Pages.find(query)
             .populate('componentType', 'title -_id')
             .populate('industry', 'title -_id')
-            .populate('style', 'title -_id');
+            .populate('style', 'title -_id')
+            .populate('stacks', 'title -_id')
+            .populate('type', 'title -_id')
 
         return res.status(200).json({
             page: page.length ? pageResource(page[0]) : {},
