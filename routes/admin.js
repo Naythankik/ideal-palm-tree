@@ -19,7 +19,7 @@ router.post("/styles/create", createAStyle);
 router.post("/types/create", createAType);
 router.post("/subscribers/create", createSubscriber);
 
-router.put("/page/update/:id", updatePage)
+router.put("/page/update/:id", upload.any([{ name: 'pageImage', maxCount: 1}, {name: 'pageCoverImage', maxCount: 1}]), updatePage)
 router.put("/components/update/:id", updateAComponent);
 router.put("/industries/update/:id", updateAnIndustry);
 router.put("/stacks/update/:id", updateAStack);

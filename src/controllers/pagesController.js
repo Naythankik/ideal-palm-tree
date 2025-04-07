@@ -1,6 +1,6 @@
 const Pages = require("../models/page");
 const pageResource = require("../resources/pagesResource");
-const pageSchema = require('../requests/pageRequest');
+const { createPageRequest, updatePageRequest } = require('../requests/pageRequest');
 const Page = require("../models/page");
 const Component = require("../models/component");
 const { uploadImage } = require('../helper/file');
@@ -152,7 +152,7 @@ const readPage = async (req, res) => {
 
 const create = async (req, res) => {
     let newPage;
-    const { error, value } = pageSchema(req.body, { abortEarly: false });
+    const { error, value } = createPageRequest(req.body, { abortEarly: false });
 
     if (error) {
         return res.status(422).json({ message: error.details.map(err => err.message) });
@@ -209,7 +209,69 @@ const deletePage = async (req, res) => {
 }
 
 const update = async (req, res) => {
-}
+    const { id } = req.params;
+
+    const { error, value } = updatePageRequest(req.body, { abortEarly: false });
+
+    if (error) {
+        return res.status(422).json({ message: error.details.map(err => err.message) });
+    }
+
+    if(value.colorPalette){
+        value.colorPalette = value.colorPalette.split(',')
+    }
+
+    if (value.componentType) {
+        value.componentType = value.componentType.map(item => item.id || item);
+    }
+
+    if (value.industry) {
+        value.industry = value.industry.map(item => item.id || item);
+    }
+
+    if (value.stacks) {
+        value.stacks = value.stacks.map(item => item.id || item);
+    }
+
+    if (value.style) {
+        value.style = value.style.map(item => item.id || item);
+    }
+
+    if (value.type) {
+        value.type = value.type.map(item => item.id || item);
+    }
+
+    const files = req.files;
+
+    if (files.length) {
+        for (const image of files) {
+            value[image.fieldname] = await uploadImage(image.path, value.brandName ?? 'landing-vault');
+        }
+    }
+
+    try {
+        const page = await Page.findById(id);
+
+        if(!page){
+            return res.status(404).json({message: 'Page not found',})
+        }
+
+        const payload = {
+            ...value
+        }
+
+        await page.updateOne(payload);
+
+        return res.status(200).json({
+            message: 'Successfully updated',
+            page: pageResource(page),
+        })
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: error.message });
+    }
+};
+
 
 module.exports = {
     createPage: create,
