@@ -72,7 +72,11 @@ const readPagesByTitle = async (req, res) => {
 
         const pages = await Pages.find(query)
             .select(['_id', 'brandName', 'pageCoverImage', 'createdAt', 'updatedAt'])
-            .populate('componentType', 'title -_id')
+            .populate('componentType', 'title')
+            .populate('industry', 'title')
+            .populate('stacks', 'title')
+            .populate('style', 'title')
+            .populate('type', 'title')
             .skip((page - 1) * limit)
             .limit(Number(limit));
 

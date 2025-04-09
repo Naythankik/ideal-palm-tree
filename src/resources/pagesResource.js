@@ -27,7 +27,7 @@ const pageResource = (page) => {
         mode: page.mode,
         componentType: page.componentType,
         industry: page.industry,
-        stack: page.stacks,
+        stacks: page.stacks,
         style: page.style,
         type: page.type,
         colorPalette: page.colorPalette,
