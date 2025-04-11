@@ -33,8 +33,8 @@ const pageResource = (page) => {
         type: universalResource(page.type),
         colorPalette: page.colorPalette,
         fonts: page.fonts,
-        createdAt: page.createdAt ?? null,
-        updatedAt: page.updatedAt ?? null,
+        createdAt: page.createdAt,
+        updatedAt: page.updatedAt,
     };
 };
 
