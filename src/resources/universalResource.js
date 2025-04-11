@@ -4,8 +4,8 @@ const universalResource = (universal) => {
         title: universal.title,
         name: universal.name,
         description: universal.description,
-        createdAt: universal.createdAt ?? null,
-        updatedAt: universal.updatedAt ?? null,
+        createdAt: universal.createdAt,
+        updatedAt: universal.updatedAt,
     };
 };
 

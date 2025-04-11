@@ -69,9 +69,8 @@ const readPagesByTitle = async (req, res) => {
             query = {};
         }
 
-
         const pages = await Pages.find(query)
-            .select(['_id', 'brandName', 'pageCoverImage', 'createdAt', 'updatedAt'])
+            .select(['_id', 'brandName', 'pageCoverImage', 'pageImage', 'fonts', 'createdAt', 'updatedAt', 'brandDescription', 'websiteUrl', 'mode', 'colorPalette'])
             .populate('componentType', 'title')
             .populate('industry', 'title')
             .populate('stacks', 'title')

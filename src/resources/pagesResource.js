@@ -1,4 +1,5 @@
 const cloudinary = require('../../config/cloudinary');
+const universalResource = require('../resources/universalResource');
 
 const optimizeUrl = (url) => {
     return cloudinary.url(url, {
@@ -25,17 +26,18 @@ const pageResource = (page) => {
         pageCoverImage: optimizeUrl(page.pageCoverImage) ?? page.pageCoverImage,
         websiteUrl: page.websiteUrl,
         mode: page.mode,
-        componentType: page.componentType,
-        industry: page.industry,
-        stacks: page.stacks,
-        style: page.style,
-        type: page.type,
+        componentType: universalResource(page.componentType),
+        industry: universalResource(page.industry),
+        stacks: universalResource(page.stacks),
+        style: universalResource(page.style),
+        type: universalResource(page.type),
         colorPalette: page.colorPalette,
+        fonts: page.fonts,
         createdAt: page.createdAt ?? null,
         updatedAt: page.updatedAt ?? null,
     };
 };
 
 module.exports = (pages) => {
-    return pages.length > 1 ? pages.map(page => pageResource(page)) : pageResource(pages);
+    return pages.length > 0 ? pages.map(page => pageResource(page)) : pageResource(pages);
 };
