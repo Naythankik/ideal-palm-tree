@@ -56,9 +56,9 @@ const PagesSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    fonts: {
+    font: {
         type: Array,
-        required: true
+        required: false
     }
 }, { timestamps: true });
 

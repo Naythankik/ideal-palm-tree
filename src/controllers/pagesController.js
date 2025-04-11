@@ -70,7 +70,7 @@ const readPagesByTitle = async (req, res) => {
         }
 
         const pages = await Pages.find(query)
-            .select(['_id', 'brandName', 'pageCoverImage', 'pageImage', 'fonts', 'createdAt', 'updatedAt', 'brandDescription', 'websiteUrl', 'mode', 'colorPalette'])
+            .select(['_id', 'brandName', 'pageCoverImage', 'pageImage', 'font', 'createdAt', 'updatedAt', 'brandDescription', 'websiteUrl', 'mode', 'colorPalette'])
             .populate('componentType', 'title')
             .populate('industry', 'title')
             .populate('stacks', 'title')
@@ -163,8 +163,15 @@ const create = async (req, res) => {
 
     value.colorPalette = value.colorPalette.split(',');
 
-    const pageImage = req.files.pageImage ? req.files.pageImage[0] : null;
-    const pageCoverImage = req.files.pageCoverImage ? req.files.pageCoverImage[0] : null;
+    if(value.font){
+        value.font = value.font.split(',');
+    }
+
+    const isUploadedFile = file =>
+        file && typeof file === 'object' && 'path' in file;
+
+    const pageImage = req.files.pageImage ? req.files.pageImage[0] : value.pageImage;
+    const pageCoverImage = req.files.pageCoverImage ? req.files.pageCoverImage[0] : value.pageCoverImage;
 
     if (!pageImage || !pageCoverImage) {
         return res.status(422).json({ message: '"pageImage" and "pageCoverImage" are required' });
@@ -172,8 +179,8 @@ const create = async (req, res) => {
 
     try {
         const payload = {
-            pageImage: await uploadImage(pageImage.path, value.brandName),
-            pageCoverImage: await uploadImage(pageCoverImage.path, value.brandName),
+            pageImage: isUploadedFile(pageImage) ? await uploadImage(pageImage.path, value.brandName) : pageImage,
+            pageCoverImage: isUploadedFile(pageCoverImage) ? await uploadImage(pageCoverImage.path, value.brandName) : pageCoverImage,
             ...value,
         }
 

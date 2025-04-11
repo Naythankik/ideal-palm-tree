@@ -32,7 +32,7 @@ const pageResource = (page) => {
         style: universalResource(page.style),
         type: universalResource(page.type),
         colorPalette: page.colorPalette,
-        fonts: page.fonts,
+        font: page.font,
         createdAt: page.createdAt,
         updatedAt: page.updatedAt,
     };

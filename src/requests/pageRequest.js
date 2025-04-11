@@ -5,6 +5,8 @@ const createPageRequest = (data, options = {}) => {
         brandName: Joi.string().required(),
         brandDescription: Joi.string().required(),
         websiteUrl: Joi.string().uri().required(),
+        pageImage: Joi.string().uri().optional(),
+        pageCoverImage: Joi.string().uri().optional(),
         mode: Joi.valid('light', 'dark').required(),
         componentType: Joi.array().items(Joi.object({
             id: Joi.string().required()
@@ -21,7 +23,8 @@ const createPageRequest = (data, options = {}) => {
         type: Joi.array().items(Joi.object({
             id: Joi.string().required()
         })).required(),
-        colorPalette: Joi.string().required()
+        colorPalette: Joi.string().required(),
+        font: Joi.string().optional()
     })
     return pageScheme.validate(data, { ...options})
 }
@@ -47,7 +50,8 @@ const updatePageRequest = (data, options = {}) => {
         type: Joi.array().items(Joi.object({
             id: Joi.string().optional()
         })).optional(),
-        colorPalette: Joi.string().optional()
+        colorPalette: Joi.string().optional(),
+        font: Joi.string().optional()
     })
     return pageScheme.validate(data, { ...options})
 }

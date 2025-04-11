@@ -15,11 +15,11 @@ module.exports = async (count) => {
     const pages = [];
 
     for (let i = 0; i < count; i++) {
+        const colorPalette = Array.from({ length: Math.floor(Math.random() * 3) + 1 }, () => faker.color.rgb());
 
-        let arr = [];
-        for (let i = 0; i < Math.floor(Math.random() * 3) + 1; i++) {
-            arr.push(faker.color.rgb());
-        }
+        const font = Array.from({ length: Math.floor(Math.random() * 2) + 1 }, () =>
+            faker.helpers.arrayElement(["Arial", "Roboto", "Open Sans", "Lato", "Montserrat", "Poppins", "Helvetica", "Georgia"])
+        );
 
         const page = {
             brandName: faker.company.name(),
@@ -33,9 +33,12 @@ module.exports = async (count) => {
             stacks: await randomElements(Stack, 3),
             style: await randomElements(Style, 3),
             type: await randomElements(Type, 3),
-            colorPalette: arr
+            colorPalette,
+            font,
         };
+
         pages.push(page);
     }
-    return pages
+
+    return pages;
 };
