@@ -109,11 +109,11 @@ const readAPageByBrandTitle = async (req, res) => {
 
         const query = {componentType: component._id, brandName};
         const page = await Pages.find(query)
-            .populate('componentType', 'title -_id')
-            .populate('industry', 'title -_id')
-            .populate('style', 'title -_id')
-            .populate('stacks', 'title -_id')
-            .populate('type', 'title -_id')
+            .populate('componentType', 'title')
+            .populate('industry', 'title _id')
+            .populate('style', 'title')
+            .populate('stacks', 'title')
+            .populate('type', 'title')
 
         return res.status(200).json({
             page: page.length ? pageResource(page[0]) : {},
