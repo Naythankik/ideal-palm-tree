@@ -231,6 +231,10 @@ const update = async (req, res) => {
         value.colorPalette = value.colorPalette.split(',')
     }
 
+    if(value.font){
+        value.font = value.font.split(',')
+    }
+
     if (value.componentType) {
         value.componentType = value.componentType.map(item => item.id || item);
     }
@@ -251,11 +255,13 @@ const update = async (req, res) => {
         value.type = value.type.map(item => item.id || item);
     }
 
-    const files = req.files;
-
-    if (files.length) {
-        for (const image of files) {
-            value[image.fieldname] = await uploadImage(image.path, value.brandName ?? 'landing-vault');
+    if(req.files){
+        for(const file of req.files){
+            try{
+                value[file.fieldname] =  await uploadImage(file.path, value.brandName ?? 'landing-vault')
+            }catch (error) {
+                return res.status(500).json({ error: error.message });
+            }
         }
     }
 
@@ -266,6 +272,10 @@ const update = async (req, res) => {
             return res.status(404).json({message: 'Page not found',})
         }
 
+        if(!Object.keys(value).length){
+            return res.status(404).json({message: 'No data to be updated',})
+        }
+
         const payload = {
             ...value
         }
@@ -274,7 +284,7 @@ const update = async (req, res) => {
 
         return res.status(200).json({
             message: 'Successfully updated',
-            page: pageResource(page),
+            page: pageResource(await Page.findById(id)),
         })
     } catch (error) {
         console.error(error);

@@ -34,6 +34,8 @@ const updatePageRequest = (data, options = {}) => {
         brandName: Joi.string().optional(),
         brandDescription: Joi.string().optional(),
         websiteUrl: Joi.string().uri().optional(),
+        pageImage: Joi.string().uri().optional(),
+        pageCoverImage: Joi.string().uri().optional(),
         mode: Joi.valid('light', 'dark').optional(),
         componentType: Joi.array().items(Joi.object({
             id: Joi.string().optional()
