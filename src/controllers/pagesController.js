@@ -57,17 +57,20 @@ const readPagesByTitle = async (req, res) => {
            filterQuery = { title: new RegExp(search, 'i') }
         }
 
-        const component = await Component.find(filterQuery);
+        const component = await Component.find(filterQuery).select('_id');
 
         if (!component) {
             return res.status(404).json({ message: 'Component not found' });
         }
 
-        let query = { componentType: component[0]?._id };
+        let query = {};
 
-        if(component.length > 1){
-            query = {};
+        if (component.length > 0) {
+            query = { componentType: { $in: component.map(c => c._id) } };
+        } else {
+            return res.status(404).json({ message: 'Component not found' });
         }
+
 
         const pages = await Pages.find(query)
             .select(['_id', 'brandName', 'pageCoverImage', 'pageImage', 'font', 'createdAt', 'updatedAt', 'brandDescription', 'websiteUrl', 'mode', 'colorPalette'])
