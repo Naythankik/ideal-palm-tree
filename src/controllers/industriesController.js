@@ -12,7 +12,10 @@ const create = async (req, res) => {
 
     try{
         const document = await Industry.create(value);
-        return res.status(200).json(industryResources(document));
+
+        return res.status(200).json({
+            data: industryResources(document)
+        });
     }catch(error){
         console.error(error);
         return res.status(400).json({ message: error.details.map(err => err.message) });

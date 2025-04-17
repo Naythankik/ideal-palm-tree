@@ -12,7 +12,9 @@ const create = async (req, res) => {
 
     try{
         const document = await Type.create(value);
-        return res.status(200).json(typeResources(document));
+        return res.status(200).json({
+            data: typeResources(document)
+        });
     }catch(error){
         console.error(error);
         return res.status(400).json({ message: error.details.map(err => err.message) });

@@ -12,7 +12,9 @@ const create = async (req, res) => {
 
     try{
         const document = await Stack.create(value);
-        return res.status(200).json(stackResources(document));
+        return res.status(200).json({
+            data : stackResources(document)
+        });
     }catch(error){
         console.error(error);
         return res.status(400).json({ message: error.details.map(err => err.message) });
