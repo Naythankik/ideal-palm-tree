@@ -22,14 +22,11 @@ const create = async (req, res) => {
 }
 
 const read = async (req, res) => {
-    const { page = 1, limit = 15, date} = req.query;
-    const skip = (page - 1) * limit;
+    const { date } = req.query;
 
     try {
         const queryDate = date ? {createdAt: { $gte: date } } : {};
         const stacks = await Stack.find(queryDate)
-            .skip(skip)
-            .limit(limit);
 
         const totalStacks = await Stack.countDocuments(queryDate);
 
